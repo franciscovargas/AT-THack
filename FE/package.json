@@ -1,0 +1,63 @@
+{
+  "name": "rxviz",
+  "description": "Visualise your rxjs graphs",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/jscheiny/rxviz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jscheiny/rxviz"
+  },
+  "author": "Jonah Scheinerman",
+  "contributors": [
+    {
+      "name": "Callum Rogers"
+    },
+    {
+      "name": "Matej Hamas"
+    },
+    {
+      "name": "Greg Slonim"
+    }
+  ],
+  "dependencies": {
+    "@blueprintjs/core": "^1.14.0",
+    "@types/chroma-js": "^1.1.32",
+    "chroma-js": "^1.2.1",
+    "dagre": "^0.7.4",
+    "es6-shim": "^0.35.2",
+    "lodash": "^4.17.2",
+    "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-dom": "^15.4.1",
+    "react-router": "^3.0.3",
+    "rxjs": "^5.0.0-rc.5",
+    "sigma": "^1.2.0"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/dagre": "^0.7.32",
+    "@types/es6-shim": "^0.31.32",
+    "@types/lodash": "^4.14.61",
+    "@types/mocha": "^2.2.33",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.19",
+    "@types/sigmajs": "^1.0.27",
+    "chai": "^3.5.0",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.24.1",
+    "jquery": "^3.1.1",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "mocha": "^3.2.0",
+    "mocha-webpack": "^0.7.0",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^1.2.2",
+    "typescript": "^2.0.10",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-node-externals": "^1.5.4"
+  }
+}
