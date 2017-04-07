@@ -38,10 +38,9 @@ def rolling_window(vector, size, func=None, channels=6):
 
     result = tf.scan(stride_update,
                      segment_init_indices,
-                     initializer=x,
-                     parallel_iterations=1)
+                     initializer=x)
 
-    return result
+    return tf.transpose(result, perm=[1,0,2])
 
 class BaseTimeSeriesSlicer(object):
     """
@@ -89,6 +88,8 @@ class BaseTimeSeriesSlicer(object):
 
 if __name__ == '__main__':
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
-    d = rolling_window(x,1)
+    print(x, x.shape)
+    d = rolling_window(x,4, channels=10)
     with tf.Session() as sess:
-        print(d.eval())
+        dd = (d.eval())
+    print (dd, dd.shape)
