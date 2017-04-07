@@ -5,6 +5,8 @@ import tensorflow as tf
 
 def rolling_window(vector, size, func=None, channels=6):
     """
+    Static method for slicing classes
+
     :param input_vector: Ideally a tensor needs testing atm just a vector
     vector MUST BE A FLOAT OR YOU WILL DIE 
 
@@ -40,7 +42,7 @@ def rolling_window(vector, size, func=None, channels=6):
                      segment_init_indices,
                      initializer=x)
 
-    return tf.transpose(result, perm=[1,0,2])
+    return tf.transpose(result, perm=[0,1,2]) # redundant easier to visualize swapping 0 and 1
 
 class BaseTimeSeriesSlicer(object):
     """
