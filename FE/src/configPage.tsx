@@ -1,6 +1,8 @@
 import * as React from "react";
+import { RxComponent } from "./utils/rxComponent"
+import { ConfigPageModel, ConfigPageState } from "./configPageModel"
 
-export class ConfigPage extends React.Component<{}, {}> {
+export class ConfigPage extends RxComponent<ConfigPageState, ConfigPageModel> {
     public render(){
         return (
             <div>
@@ -33,7 +35,10 @@ export class ConfigPage extends React.Component<{}, {}> {
                     </tr>
                     <tr>
                         <td>Accelerometer Z</td>
-                    </tr>                       
+                    </tr>
+                    <tr>
+                        <td>{this.state.x}</td>
+                    </tr>                          
                 </tbody>
             </table>
         );
