@@ -11,9 +11,8 @@ def main(test_k=3):
 	X = iris.data.astype(numpy.float32)
 	Y = iris.target
 	g = gmm.GMM(test_k)
-	g.fit(input_fn= lambda:(tf.constant(X), None) )
-	print(dir(g))
-	print(g.predict(X))
+	g.fit(input_fn= lambda:(tf.constant(X), None),  max_steps=300)
+	print(list(g.predict_assignments(lambda:tf.constant(X))))
 	print("FITTED")
 
 
