@@ -1,2 +1,3 @@
 # AT-THack
-# AT &amp; T Hackathon repository
+
+IoT ML Labling solution
