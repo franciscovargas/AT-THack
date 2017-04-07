@@ -1,1 +1,7 @@
-m2x>=3.0.4
+argparse==1.2.1
+iso8601==0.1.11
+m2x==5.4.0
+numpy==1.12.1
+requests==2.13.0
+scipy==0.19.0
+wsgiref==0.1.2
