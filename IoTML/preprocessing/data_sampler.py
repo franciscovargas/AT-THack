@@ -1,5 +1,5 @@
 import abc
-import numpy
+import numpy # TODO: migrate np to tf maybe
 
 
 class BaseTimeSeriesSlicer(object):

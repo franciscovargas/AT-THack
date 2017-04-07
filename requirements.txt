@@ -1,12 +1,17 @@
 appdirs==1.4.3
--e git+https://github.com/franciscovargas/AT-THack.git@16252aa5daa201852be81f55a8991fb4c93bde94#egg=AT_THACK
+-e git+https://github.com/franciscovargas/AT-THack.git@c887439381637698896159871a220d0e06233c70#egg=AT_THACK
+cycler==0.10.0
 iso8601==0.1.11
 m2x==5.4.0
+matplotlib==2.0.0
 numpy==1.12.1
 packaging==16.8
 protobuf==3.2.0
 pyparsing==2.2.0
+python-dateutil==2.6.0
+pytz==2017.2
 requests==2.13.0
+scikit-learn==0.18.1
 scipy==0.19.0
 six==1.10.0
 tensorflow==1.0.1
