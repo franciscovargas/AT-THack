@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Link } from "react-router";
+
 import { RxComponent } from "./utils/rxComponent"
 import { ConfigPageModel, ConfigPageState } from "./configPageModel"
 
@@ -7,6 +9,7 @@ export class ConfigPage extends RxComponent<ConfigPageState, ConfigPageModel> {
         return (
             <div>
                 {this.renderTable()}
+                <Link to="/page-two">Next</Link>
             </div>
         );
     }
