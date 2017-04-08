@@ -130,14 +130,16 @@ class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
     @tf_session
     def insert_segment(self, time_segement,
                        start_time, end_time):
-        if (start_time - self.start_timestamp).seconds / 60.0 < self.NOVERLAP_TOLERANCE:
+        if (start_time - self.end_timestamp).seconds / 60.0 < self.NOVERLAP_TOLERANCE:
             # matrix to concatenate with incoming stream
-            overlap_data = np.concatenate(self.data[-1,:,:], time_segement, axis=-1) # port to tf
+            overlap_data = numpy.concatenate([self.data[-1,:,:], time_segement], axis=-1) # port to tf
             tmp_tensor = rolling_window(overlap_data,
                                         self.window, func=None,
                                         channels=self.channels).eval()
-            self._data = np.concatenate([self._data, tmp_tensor], axis=-1)
+            print(self._data.shape, tmp_tensor.shape)
+            self._data = numpy.concatenate([self._data, tmp_tensor], axis=0)
         else:
+            print( (start_time - self.start_timestamp).seconds / 60.0)
             raise BaseException("This stream should be its Own independant object")
 
 
@@ -149,13 +151,14 @@ if __name__ == '__main__':
 
     dt1, dt2  =  (dt.datetime(2017, 4, 8, 1, 38, 6), dt.datetime(2017, 4, 8, 5, 38, 6))
     dt3, dt4  =  (dt.datetime(2017, 4, 8, 5, 39, 6), dt.datetime(2017, 4, 8, 10, 39, 6))
-    print((dt3  - dt2).seconds)
+    print((dt3  - dt2).seconds /60.0)
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
     d = rolling_window(x,4, channels=10)
 
     fts = FixedTimeSeriesSlicer(x, 4, dt1, dt2,  1)
     print(fts.data)
+    fts.insert_segment(x, dt3, dt4)
 
     # @tf_session
     # def tst_cntxt(d):
