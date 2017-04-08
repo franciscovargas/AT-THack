@@ -1,0 +1,81 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="lateralview.net.m2xapiv2exampleapp.activities.DeviceActivity"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List Distributions"
+            android:onClick="listDistributions"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Distribution"
+            android:onClick="createDistribution"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Distribution Details"
+            android:onClick="viewDistributionDetails"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Distribution Details"
+            android:onClick="updateDistributionDetails"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List Devices from an existing Distribution"
+            android:onClick="listDevicesExistingDistribution"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Device to existing Distribution"
+            android:onClick="addDeviceToDistribution"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Distribution"
+            android:onClick="deleteDistribution"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List Data Streams"
+            android:onClick="listDataStreams"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Update data Streams"
+            android:onClick="createUpdateDataStream"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View data Stream"
+            android:onClick="viewDataStream"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete data Stream"
+            android:onClick="deleteDataStream"/>
+
+    </LinearLayout>
+</ScrollView>

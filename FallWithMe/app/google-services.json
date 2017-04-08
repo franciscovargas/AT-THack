@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "397702988009",
+    "firebase_url": "https://fallwithme-87fe1.firebaseio.com",
+    "project_id": "fallwithme-87fe1",
+    "storage_bucket": "fallwithme-87fe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397702988009:android:7555435561d02dbc",
+        "android_client_info": {
+          "package_name": "att.hack.uk.fallwithme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397702988009-sp3e0ilhee72n4bfrv2ofjjd7h9130ae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "att.hack.uk.fallwithme",
+            "certificate_hash": "0f217344cc3e5f98f109833176f334bf2a692ddb"
+          }
+        },
+        {
+          "client_id": "397702988009-kuriggd0it2mgtnha5idjjqekl6d8543.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDjObojEqTdYPC8-nf74sY3xvP5Z4WB7I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397702988009-kuriggd0it2mgtnha5idjjqekl6d8543.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

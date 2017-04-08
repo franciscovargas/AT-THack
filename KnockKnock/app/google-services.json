@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "620071183969",
+    "firebase_url": "https://knockknock-f742c.firebaseio.com",
+    "project_id": "knockknock-f742c",
+    "storage_bucket": "knockknock-f742c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620071183969:android:b3ef34300b1aced3",
+        "android_client_info": {
+          "package_name": "att.hack.uk.knockknock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620071183969-qjg01uih1sbl9ddbb3dp80fscck0in15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "att.hack.uk.knockknock",
+            "certificate_hash": "0f217344cc3e5f98f109833176f334bf2a692ddb"
+          }
+        },
+        {
+          "client_id": "620071183969-6o7mbf1vm91rub9821gprn68bum645fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYmxXoICSF2L6RTynY234WikVDo-e7i2c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620071183969-6o7mbf1vm91rub9821gprn68bum645fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
