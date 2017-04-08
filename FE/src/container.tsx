@@ -1,3 +1,5 @@
+import "../res/header.png"
+
 import * as React from "react";
 import * as _ from "lodash";
 

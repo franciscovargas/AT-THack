@@ -48,7 +48,7 @@ export class ThirdPage extends RxComponent<ThirdPageState, ThirdPageModel> {
                   <Tab2 id="Advanced" className="strong" title="Advanced" panel={this.renderAdvancedPanel()} />
               </Tabs2>
               <a className={`train-button pt-button ${intent} ${icon}`} onClick={onTrainingClick}>{trainButtonText}</a>
-              <a className={`finish-button pt-button pt-intent-success ${finishButtonStatus}`} onClick={onFinished}>Save Model To Application</a>
+              <a className={`finish-button pt-button pt-intent-success ${finishButtonStatus}`} onClick={onFinished}>Save Model To Application And Exit</a>
           </div>  
         );
     }
