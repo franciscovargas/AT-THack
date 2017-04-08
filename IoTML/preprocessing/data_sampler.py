@@ -2,6 +2,8 @@ import abc
 import numpy
 from sklearn.manifold import TSNE
 import tensorflow as tf
+import urllib.request
+import json
 
 
 def tf_session(func):
@@ -9,6 +11,32 @@ def tf_session(func):
         with tf.Session()as sess:
             return func(*args, **kwargs)
     return func_wrapper
+
+
+def util_parser(mode="train"):
+    res = urllib.request.urlopen("http://35.187.39.42:5123/{0}".format(mode)).read()
+    train_data = json.loads(res.decode('utf-8'))
+
+    print("train_data")
+    matrix = list()
+    y = list()
+    t = numpy.asarray(train_data[0]["myPhone_falling"])[:,0]
+    for sample in train_data:
+        # print(list(sample.values()))
+        for nested_thing_k in sample:
+            # print(nested_thing_k)
+            nested_thing = numpy.asarray(sample[nested_thing_k])
+            # print(nested_thing[:,1][:40])
+            if nested_thing_k != "myPhone_falling":
+                matrix.append(nested_thing[:,1][:40])
+            else:
+                y.append(nested_thing[:,1][:40])
+            # bbbb
+
+        # print(v,times)
+    matrix = numpy.asarray(matrix)
+    print(matrix, matrix.shape)
+    return train_data
 
 
 def rolling_window(vector, size, func=None, channels=6):
@@ -169,13 +197,18 @@ if __name__ == '__main__':
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
     d = rolling_window(x,4, channels=10)
-
+    """
     fts = FixedTimeSeriesSlicer(x, 4, dt1, dt2,  1)
     print(fts.data)
     print(fts.data.reshape(7,40))
     fts.insert_segment(x, dt3, dt4)
     print(fts.data.shape)
     print(fts.collapse_sensorial_axis())
+    """
+
+    util_parser()
+
+
 
     # @tf_session
     # def tst_cntxt(d):
