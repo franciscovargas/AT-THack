@@ -1,5 +1,9 @@
 import * as React from "react";
-// import * as _ from "lodash";
+import "../res/FCNN.png";
+import "../res/CNN.png";
+import "../res/LSTM.png";
+import "../res/SLSTM.png";
+
 
 import { RxComponent } from "./utils/rxComponent";
 import { ThirdPageModel, ThirdPageState } from "./thirdPageModel";
@@ -27,32 +31,38 @@ export class ThirdPage extends RxComponent<ThirdPageState, ThirdPageModel> {
 
     private generateFCNNDescription() {
       return (
-        <div>
-          FCNN
+        <div className="description">
+          <h3>Fully Connected Neural Network (FC-NN)</h3>
+          <img className="shift-right" src="../res/FCNN.png" />
         </div>
       );
     }
 
     private generateCNNDescription() {
       return (
-        <div>
-          CNN
+        <div className="description">
+          <h3>Convolutional Neural Network (CNN)</h3>
+          <img className="shift-right" src="../res/CNN.png" />
         </div>
       );
     }
 
     private generateLSTMDescription() {
       return (
-        <div>
-          LSTM
+        <div className="description">
+          <h3>Long Short Term Memory (LSTM) Network</h3>
+
+          <img className="shift-right" src="../res/LSTM.png" />
         </div>
       );
     }
 
     private generateSLSTMDescription() {
       return (
-        <div>
-          SLSTM
+        <div className="description">
+          <h3>Stacked Long Short Term Memory (LSTM) Network</h3>
+
+          <img className="shift-right" src="../res/SLSTM.png" />
         </div>
       );
     }

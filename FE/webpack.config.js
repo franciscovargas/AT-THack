@@ -18,6 +18,7 @@ module.exports = {
                 test: /\.(woff|svg|ttf|eot|gif|jpeg|jpg|png)([\?]?.*)$/,
                 include: [
                     path.resolve(__dirname, "node_modules"),
+                    path.resolve(__dirname, "res"),
                 ],
                 loader: "file-loader",
                 query: {
