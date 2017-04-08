@@ -5,7 +5,6 @@ import "../res/LSTM.png";
 import "../res/SLSTM.png";
 
 import { NonIdealState } from "@blueprintjs/core";
-
 import { RxComponent } from "./utils/rxComponent";
 import { ThirdPageModel, ThirdPageState } from "./thirdPageModel";
 import { Tab2, Tabs2 } from "@blueprintjs/core";
@@ -21,10 +20,10 @@ export class ThirdPage extends RxComponent<ThirdPageState, ThirdPageModel> {
                </p>
                <Tabs2 id="foo" onChange={()=>{return}}>
                   <Tab2 id="FCNN"  className="strong" title="Fully Connected Neural Network" panel={this.generateFCNNDescription()} />
-                  <Tab2 id="CNN"   className="strong"title="Convolutional Neural Network" panel={this.generateCNNDescription()} />
-                  <Tab2 id="LSTM"  className="strong"title="Long Short Term Memory (LSTM)" panel={this.generateLSTMDescription()} />
-                  <Tab2 id="SLSTM" className="strong"title="Stacked LSTM" panel={this.generateSLSTMDescription()} />
-                  <Tab2 id="Advanced" className="strong" title="Advanced" panel={this.generateSLSTMDescription()} />
+                  <Tab2 id="CNN"   className="strong" title="Convolutional Neural Network" panel={this.generateCNNDescription()} />
+                  <Tab2 id="LSTM"  className="strong" title="Long Short Term Memory (LSTM)" panel={this.generateLSTMDescription()} />
+                  <Tab2 id="SLSTM" className="strong" title="Stacked LSTM" panel={this.generateSLSTMDescription()} />
+                  <Tab2 id="Advanced" className="strong" title="Advanced" panel={this.renderAdvancedPanel()} />
               </Tabs2>
           </div>  
         );
@@ -66,6 +65,24 @@ export class ThirdPage extends RxComponent<ThirdPageState, ThirdPageModel> {
           <h3>Stacked Long Short Term Memory (LSTM) Network</h3>
           <div><NonIdealState title="Missing Info" description="Something missing" /></div>
           <img className="shift-right" src="../res/SLSTM.png" />
+        </div>
+      );
+    }
+
+    private renderAdvancedPanel() {
+      return (
+        <div>
+          <h3>Advanced</h3>
+          <p className="normal ui-text">Write your own classifier using <a target="_blank" href="https://www.tensorflow.org/get_started/tflearn">Tensorflow high level api</a>.</p> 
+          <div>
+          </div>
+          <span className="normal ui-text">Example: </span>
+          <code> estimator = DNNClassifier(feature_columns=[sparse_feature_a_emb, sparse_feature_b_emb],hidden_units=[1024, 512, 256]) </code>
+          <div className="description">
+            <textarea rows={10} cols={200} className="font-code">
+              Write your code here...
+            </textarea>
+          </div>
         </div>
       );
     }
