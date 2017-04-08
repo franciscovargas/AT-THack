@@ -2,19 +2,30 @@ import * as Rx from "rxjs";
 
 import { RxModel } from "./utils/rxComponent";
 
+export type Status = "UNTRAINED" | "TRAINING" | "TRAINED";
+
 export interface ThirdPageState {
-    numOfClasses: number;
+    status: Status;
 };
 
 export class ThirdPageModel implements RxModel<ThirdPageState> {
-    private numOfClasses$ = new Rx.BehaviorSubject<number>(2);
+    private status$ = new Rx.BehaviorSubject<Status>("UNTRAINED");
     public state$: Rx.Observable<ThirdPageState>;
 
     constructor() {
-        this.state$ = this.numOfClasses$.map(n => ({ numOfClasses: n }));
+        this.state$ = this.status$.map(s => ({ status: s }));
     }
 
-    public changeNumOfClasses = (n: number) => {
-        this.numOfClasses$.next(n);
+    public trainingStarted = () => {
+        this.status$.next("TRAINING");
+        setTimeout(this.trainingFinished, 2000);
+    }
+
+    public trainingAborted = () => {
+        this.status$.next("UNTRAINED");
+    }
+
+    public trainingFinished = () => {
+        this.status$.next("TRAINED");
     }
 }
