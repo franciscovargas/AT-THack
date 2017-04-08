@@ -9,6 +9,7 @@ import { Router, Route, hashHistory } from "react-router";
 import { FirstPage } from "./firstPage";
 import { FirstPageModel } from "./firstPageModel";
 import { SecondPage } from "./secondPage";
+import { SecondPageModel } from "./secondPageModel"
 import { Container } from "./container";
 
 let appElement = document.createElement("div");
@@ -42,7 +43,7 @@ ReactDOM.render((
         />
         <Route
             path="/second-page"
-            component={wrapInContainer(<SecondPage />, 1)}
+            component={wrapInContainer(<SecondPage model={new SecondPageModel()}/>, 1)}
         />
     </Router>),
     document.getElementById('app')
