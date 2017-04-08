@@ -99,7 +99,7 @@ class BaseTimeSeriesSlicer(object):
 
 class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
 
-    NOVERLAP_TOLERANCE = 10 # tolerance to incorporate a new adjacent stream
+    NOVERLAP_TOLERANCE = 3 # tolerance to incorporate a new adjacent stream
 
     def __init__(self, init_data_stream, window,
                  start_timestamp, end_timestamp, interval):
@@ -117,32 +117,51 @@ class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
     @property
     def data(self):
         if self._data is None:
+            self._data = self.slice_series()
             self.init_data_stream = None # freeing memory
-            return self.slice_series()
         return self._data
 
+    @tf_session
     def slice_series(self):
         return rolling_window(self.init_data_stream,
                               self.window, func=None,
                               channels=self.channels).eval()
 
-
+    @tf_session
     def insert_segment(self, time_segement,
                        start_time, end_time):
-        if (start_time - self.start_timestamp).minutes < self.NOVERLAP_TOLERANCE:
-            overlap_data = self.data[-1,:,:]  # matrix to concatenate with incoming stream
+        if (start_time - self.start_timestamp).seconds / 60.0 < self.NOVERLAP_TOLERANCE:
+            # matrix to concatenate with incoming stream
+            overlap_data = np.concatenate(self.data[-1,:,:], time_segement, axis=-1) # port to tf
+            tmp_tensor = rolling_window(overlap_data,
+                                        self.window, func=None,
+                                        channels=self.channels).eval()
+            self._data = np.concatenate([self._data, tmp_tensor], axis=-1)
+        else:
+            raise BaseException("This stream should be its Own independant object")
+
+
 
 
 
 if __name__ == '__main__':
+    import datetime as dt
+
+    dt1, dt2  =  (dt.datetime(2017, 4, 8, 1, 38, 6), dt.datetime(2017, 4, 8, 5, 38, 6))
+    dt3, dt4  =  (dt.datetime(2017, 4, 8, 5, 39, 6), dt.datetime(2017, 4, 8, 10, 39, 6))
+    print((dt3  - dt2).seconds)
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
     d = rolling_window(x,4, channels=10)
 
-    @tf_session
-    def tst_cntxt(d):
-        return d.eval()
+    fts = FixedTimeSeriesSlicer(x, 4, dt1, dt2,  1)
+    print(fts.data)
 
-    dd = tst_cntxt(d)
-    # print(dd)
-    print (dd[-1,:,:], dd.shape)
+    # @tf_session
+    # def tst_cntxt(d):
+    #     return d.eval()
+
+    # dd = tst_cntxt(d)
+    # # print(dd)
+    # print (dd[-1,:,:], dd.shape)
+    # print(numpy.concatenate([dd[-1,:,:],dd[-1,:,:]], axis=-1))
