@@ -18,7 +18,7 @@ export class FirstPageModel implements RxModel<FirstPageState> {
     constructor(dataSource: FirstPageDataSource = new FirstPageDataSourceImpl()) {
         this.state$ = dataSource.getData().map((rawData: _.Dictionary<number[]>) => {
             let numOfClasses = _.size(_.keys(rawData));
-            let selectedKeys = [_.keys(rawData)[0]]; // TODO
+            let selectedKeys = [_.keys(rawData)[0], _.keys(rawData)[1]]; // TODO
             let dataToRender = _.pick(rawData, selectedKeys);
             return {
                 numOfClasses,
