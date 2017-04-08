@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eu
+
+source install-nix
+
+nix-shell --run 'npm shrinkwrap --dev'
+nix-shell --run 'node ./tasks/shrinkwrap-remove-resolved.js'

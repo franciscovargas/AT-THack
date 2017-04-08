@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eu
+
+source install-nix
+
+nix-shell --run "npm install"
+nix-shell --run "./node_modules/webpack/bin/webpack.js"
