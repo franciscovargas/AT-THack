@@ -1,6 +1,14 @@
 import abc
-import numpy # TODO: migrate np to tf maybe
+from contextlib import contextmanager
+import numpy
 import tensorflow as tf
+
+
+def tf_session(func):
+    def func_wrapper(*args, **kwargs):
+        with tf.Session()as sess:
+            return func(*args, **kwargs)
+    return func_wrapper
 
 
 def rolling_window(vector, size, func=None, channels=6):
@@ -25,7 +33,7 @@ def rolling_window(vector, size, func=None, channels=6):
         # Extract vector for this particular permutation
         # print(idx.eval(),size)
         # sub_vector = vector[:,:,idx:idx + size] 
-        print(_,idx)
+
         # sub_vector = tf.slice(vector,[0, idx], [ channels, size])
         sub_vector = tf.slice(vector,[0, idx], [ channels, size])
 
@@ -43,6 +51,7 @@ def rolling_window(vector, size, func=None, channels=6):
                      initializer=x)
 
     return tf.transpose(result, perm=[0,1,2]) # redundant easier to visualize swapping 0 and 1
+
 
 class BaseTimeSeriesSlicer(object):
     """
@@ -88,10 +97,52 @@ class BaseTimeSeriesSlicer(object):
         pass
 
 
+class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
+
+    NOVERLAP_TOLERANCE = 10 # tolerance to incorporate a new adjacent stream
+
+    def __init__(self, init_data_stream, window,
+                 start_timestamp, end_timestamp, interval):
+        """
+        Just go instance.data to get the sliced tensor
+        """
+        self.init_data_stream = init_data_stream
+        self.window = window
+        self.start_timestamp = start_timestamp
+        self.end_timestamp = end_timestamp
+        self.interval = interval
+        self.channels, self.time_steps = self.init_data_stream.shape
+        self._data = None
+
+    @property
+    def data(self):
+        if self._data is None:
+            self.init_data_stream = None # freeing memory
+            return self.slice_series()
+        return self._data
+
+    def slice_series(self):
+        return rolling_window(self.init_data_stream,
+                              self.window, func=None,
+                              channels=self.channels).eval()
+
+
+    def insert_segment(self, time_segement,
+                       start_time, end_time):
+        if (start_time - self.start_timestamp).minutes < self.NOVERLAP_TOLERANCE:
+            overlap_data = self.data[-1,:,:]  # matrix to concatenate with incoming stream
+
+
+
 if __name__ == '__main__':
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
     d = rolling_window(x,4, channels=10)
-    with tf.Session() as sess:
-        dd = (d.eval())
-    print (dd, dd.shape)
+
+    @tf_session
+    def tst_cntxt(d):
+        return d.eval()
+
+    dd = tst_cntxt(d)
+    # print(dd)
+    print (dd[-1,:,:], dd.shape)
