@@ -18,7 +18,7 @@ let appElement = document.createElement("div");
 appElement.id = "app";
 document.body.appendChild(appElement);
 
-const names = ["First", "Second", "Third"];
+const names = ["Class Label Selection", "Sensor Filtering", "ML Model"];
 const linkNames = ["", "second-page", "third-page"];
 
 function wrapInContainer(element: JSX.Element, index: number) {

@@ -17,14 +17,21 @@ export class SecondPage extends RxComponent<SecondPageState, SecondPageModel> {
                 <p className="ui-text">
                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper, tellus et accumsan faucibus, justo metus facilisis libero, sit amet mollis enim enim imperdiet libero. Aliquam mollis velit eget est tincidunt mattis. Suspendisse ultrices mollis odio eget aliquet. Duis et dapibus metus, quis dignissim est. Pellentesque a pretium magna. Phasellus interdum mi facilisis orci suscipit, consectetur condimentum purus ultrices. Cras purus ligula, fermentum sed turpis vel, cursus porta ante. Duis rhoncus ipsum eros, eget convallis metus blandit sit amet. Nullam vitae risus facilisis, ultricies diam vitae, feugiat elit. Sed tincidunt lectus nec convallis sodales.
                 </p>
-                {this.renderCheckboxes()}
-                {this.renderLineChart()}
+                <div className="graph-container">
+                    <div className="graph">
+                        {this.renderCheckboxes()}
+                        {this.renderLineChart()}
+                    </div>
+                </div>
             </div>
         );
     }
 
     public componentDidMount() {
-        this.props.model.toggleChecked("gyro_1");
+        this.props.model.toggleChecked("Accelerometer A");
+        this.props.model.toggleChecked("Accelerometer B");
+        this.props.model.toggleChecked("Heartbeat");
+
     }
 
     private renderCheckboxes() {
@@ -60,7 +67,7 @@ export class SecondPage extends RxComponent<SecondPageState, SecondPageModel> {
         console.log(lines);
 
         return (
-          <LineChart width={600} height={300} data={data}
+          <LineChart className="graph" width={600} height={300} data={data}
             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                <XAxis dataKey="timestamp"/>
                <YAxis/>
