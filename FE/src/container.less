@@ -1,0 +1,44 @@
+
+@margin-width: 3vw;
+@m2x-blue: #1ea4d7;
+.container {
+    padding: 0;
+
+    .header {
+        margin: 0;
+        background-color: @m2x-blue;
+        height: 15vh;
+        outline: 1px red solid;
+    }
+
+    .navigation_bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 10vh;
+        outline: 1px blue solid;
+
+        .navigation_bar_content {
+
+        }
+    }
+
+    .body {
+        display: flex;
+        justify-content: center;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        margin: 2vh @margin-width 2vh @margin-width;
+        width: 100%;
+        height: 70vh;
+        outline: 1px green solid;
+
+        .next-button {
+            width: 10em;
+            margin: auto 0 0 auto;
+        }
+    }
+}
