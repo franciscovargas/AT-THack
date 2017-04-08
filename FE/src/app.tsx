@@ -34,16 +34,6 @@ function wrapInContainer(element: JSX.Element, index: number) {
     return component;
 }
 
-// class Home extends React.Component<{},{}> {
-//     public render() {
-//         return (
-//             <Container>
-//                 <FirstPage model={new FirstPageModel()} nextPage="second-page" />
-//             </Container>
-//         );
-//     }   
-// }
-
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route

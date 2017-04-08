@@ -29,12 +29,18 @@ export class Container extends React.Component<ContainerProps, {}> {
     }
 
     private renderNavigationBar() {
+      let nextLink = (this.props.nextPage === "")
+        ? null
+        : <Link to={`/${this.props.nextPage}`} className="next-button pt-button pt-intent-primary">Next</Link>; 
       return (
-        <div className="navigation_bar">
+        <div className="navigation_bar pt-elevation-0">
           <div className="navigation_bar_content">
-            <ul className="pt-breadcrumbs">
-              {this.renderBreadCrumbs()}
-            </ul>
+            <div>
+              <ul className="pt-breadcrumbs">
+                {this.renderBreadCrumbs()}
+              </ul>
+            </div>
+            {nextLink}
           </div>
         </div>
       );
@@ -57,10 +63,9 @@ export class Container extends React.Component<ContainerProps, {}> {
 
     private renderBody() {
       return (
-        <div className="body">
+        <div className="body pt-elevation-0">
           <div className="content">
               {this.props.children}
-              <Link to={`/${this.props.nextPage}`} className="next-button pt-button pt-intent-primary">Next</Link>
           </div>
         </div>
       );

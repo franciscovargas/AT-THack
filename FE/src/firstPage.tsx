@@ -2,7 +2,7 @@ import * as React from "react";
 import * as _ from "lodash";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-import { NumericInput } from "@blueprintjs/core";
+import { NumericInput, Checkbox } from "@blueprintjs/core";
 
 import { RxComponent } from "./utils/rxComponent"
 import { FirstPageModel, FirstPageState } from "./firstPageModel"
@@ -21,6 +21,9 @@ export class FirstPage extends RxComponent<FirstPageState, FirstPageModel> {
         );
     }
 
+    public componentDidMount() {
+        this.props.model.toggleChecked("gyro_1");
+    }
     private renderNumOfClasses = () => {
         let onValueChange = (n: number) => {
             this.props.model.changeNumOfClasses(n);
@@ -47,6 +50,30 @@ export class FirstPage extends RxComponent<FirstPageState, FirstPageModel> {
     }
 
     private renderChart() {
+        return (
+            <div className="chart">
+                <h2>Choose important sensors</h2>
+                {this.renderCheckboxes()}
+                {this.renderLineChart()}
+            </div>
+        );
+    }
+
+    private renderCheckboxes() {
+        let checkBoxes = _.map(_.keys(this.state.data), (key: string) => {
+            let onChange = () => {
+                this.props.model.toggleChecked(key); // TODO create
+            }
+            return <Checkbox className="checkbox" key={key} checked={_.includes(this.state.selectedKeys, key)} label={key} onChange={onChange} />;
+        });
+        return (
+            <div className="checkbox-container">
+                {checkBoxes}  
+            </div>
+        );
+    }
+
+    private renderLineChart() {
         // TODO - hack
         let data = _.range((_.values(this.state.data)[0]).length).map(
             (n: number) => ({timestamp: n})
@@ -59,8 +86,10 @@ export class FirstPage extends RxComponent<FirstPageState, FirstPageModel> {
         });
         
         let lines = _.map(this.state.selectedKeys, (key: string, i: number) =>
-            <Line type="monotone" dataKey={key} stroke={COLORS[i]} activeDot={{r: 8}}/>,
+            <Line type="monotone" key={key} dataKey={key} stroke={COLORS[i]} />
         );
+
+        console.log(lines);
 
         return (
           <LineChart width={600} height={300} data={data}

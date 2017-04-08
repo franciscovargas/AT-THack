@@ -12,14 +12,23 @@ export interface FirstPageState {
 };
 
 export class FirstPageModel implements RxModel<FirstPageState> {
+    private toggledKeys$ = new Rx.Subject<string>();
     private numOfClasses$ = new Rx.BehaviorSubject<number>(0);
     public state$: Rx.Observable<FirstPageState>;
 
     constructor(dataSource: FirstPageDataSource = new FirstPageDataSourceImpl()) {
+        let selectedKeys$ = this.toggledKeys$.scan((acc: string[], key: string) => {
+            if (_.includes(acc, key)) {
+                return _.pull(acc, key);
+            } else {
+                return _.concat(acc, [key]);
+            }
+        }, []).startWith([]);
+
         this.state$ = dataSource.getData().map((rawData: _.Dictionary<number[]>) => {
             let numOfClasses = _.size(_.keys(rawData));
-            let selectedKeys = [_.keys(rawData)[0], _.keys(rawData)[1]]; // TODO
-            let dataToRender = _.pick(rawData, selectedKeys);
+            let selectedKeys = [] as string[];
+            let dataToRender = {};
             return {
                 numOfClasses,
                 data: rawData,
@@ -28,12 +37,15 @@ export class FirstPageModel implements RxModel<FirstPageState> {
             };
         }).combineLatest(this.numOfClasses$, (state: FirstPageState, n: number) => {
             return _.assign({}, state, { numOfClasses: n });
-        }).do(s => console.log(s.numOfClasses));
-
+        }).combineLatest(selectedKeys$, (state: FirstPageState, selectedKeys: string[]) => {
+             return _.assign({}, state, { selectedKeys, dataToRender: _.pick(state.data, selectedKeys) });
+        });
     }
 
+    public toggleChecked(key: string) {
+        this.toggledKeys$.next(key);
+    }
     public changeNumOfClasses = (n: number) => {
-        console.log("Putting: " + n);
         this.numOfClasses$.next(n);
     }
 }
