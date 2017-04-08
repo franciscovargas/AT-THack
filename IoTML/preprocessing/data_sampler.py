@@ -4,6 +4,7 @@ from sklearn.manifold import TSNE
 import tensorflow as tf
 import urllib.request
 import json
+import datetime
 
 
 def tf_session(func):
@@ -18,25 +19,41 @@ def util_parser(mode="train"):
     train_data = json.loads(res.decode('utf-8'))
 
     print("train_data")
-    matrix = list()
-    y = list()
+    matrix = [ ] #* len(train_data)
+    # print (list(map(lambda x: x.keys(), train_data)))
+    # exit()
+    c =0
+    y = [] # * len(train_data)
     t = numpy.asarray(train_data[0]["myPhone_falling"])[:,0]
-    for sample in train_data:
+    tiem = list()
+    for i,sample in enumerate(train_data):
         # print(list(sample.values()))
+        # matrix.append([])
+        # y.append([])
+        tiem.append(numpy.asarray(sample["myPhone_falling"])[:,0])
+        # print(i, sample.keys())
+        # exit()
+        if len(sample) < 2:
+            c += 1
+            continue
+        matrix.append([])
+        y.append([])
         for nested_thing_k in sample:
             nested_thing = numpy.asarray(sample[nested_thing_k])
             # print(nested_thing_k)
             # print(nested_thing[:,1][:40])
             if nested_thing_k != "myPhone_falling":
-                matrix.append(nested_thing[:,1][:40])
+                matrix[i-c].append(nested_thing[:,1][:40])
             else:
-                y.append(nested_thing[:,1][:40])
+                # print((nested_thing[:,1][-1]))
+                y[i-c].append(nested_thing[:,1][-1])
             # bbbb
+        matrix[i-c] = numpy.asarray(matrix[i-c])
 
         # print(v,times)
-    matrix = numpy.asarray(matrix)
-    print(matrix, matrix.shape)
-    return matrix, y, t
+    # matrix = numpy.asarray(matrix)
+    # print(matrix, matrix.shape)
+    return matrix, y, tiem
 
 
 def rolling_window(vector, size, func=None, channels=6):
@@ -197,9 +214,10 @@ if __name__ == '__main__':
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
     # d = rolling_window(x,4, channels=10)
-    matrix, y, t = util_parser()
-    
-    fts = FixedTimeSeriesSlicer(matrix.astype(numpy.float64), 4, t[0], t[-1],  1)
+    matrix, y, tiem = util_parser()
+    t = tiem[0]
+    # print(matrix)
+    fts = FixedTimeSeriesSlicer(matrix[0].astype(numpy.float64), 4, t[0], t[-1],  1)
     print(fts.data,fts.data.shape)
     # print(fts.data.reshape(7,40))
     # fts.insert_segment(x, dt3, dt4)
