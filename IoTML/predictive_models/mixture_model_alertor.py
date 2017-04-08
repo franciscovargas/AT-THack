@@ -1,9 +1,13 @@
 from tensorflow.contrib.factorization.python.ops import gmm
 import tensorflow as tf
 import numpy
+from numpy import array
+import numpy.linalg as la
+import math as m
 from sklearn import datasets
 from sklearn.decomposition import PCA
 from multiprocessing import Pool
+import matplotlib.pyplot as plt
 
 
 def main(test_k=3):
@@ -15,8 +19,17 @@ def main(test_k=3):
     # g.fit(input_fn= lambda:(tf.constant(X), None),  max_steps=300)
     # print(list(g.predict_assignments(lambda:tf.constant(X))))
     g = MixtureModelOptimiser(X)
-    g.elbow_method()
+    print(g.elbow_method())
     print("FITTED")
+
+
+def least_squares(t, x):
+    """
+    x = mt + c fit
+    """
+    design_mat = numpy.vstack([t, numpy.ones(len(t))]).T
+    m, c = la.lstsq(design_mat, x)[0]
+    return m*t + c
 
 
 class MixtureModelOptimiser(object):
@@ -63,22 +76,33 @@ class MixtureModelOptimiser(object):
         g = gmm.GMM(k)
         g.fit(input_fn= lambda:(tf.constant(self.X), None),  max_steps=300)
         cent = list(g.clusters())
-        print(cent)
+        # print(cent)
         assignments =list(g.predict_assignments(lambda:tf.constant(self.X)))
-        print(assignments, len(assignments), self.X.shape)
+        # print(assignments, len(assignments), self.X.shape)
         clusters = [[]] * (max(assignments) + 1)
         # clusters[0] = [1]
         [clusters[el].append(self.X[i]) for i, el in enumerate(assignments)]
-        print(clusters)
-        print(self.agg_dist(clusters, cent))
+        # print(clusters)
+        return (self.agg_dist(clusters, cent))
 
     def elbow_method(self):
         scores = list()
         p = Pool(4)
         ks = range(2, self.k_max)
-        p.map(self.elbow_iteration, ks)
-            
-            # print(list(g.predict_assignments(lambda:tf.constant(X))))
+        dists = p.map(self.elbow_iteration, ks)
+        # print (dists)
+        plt.plot(dists, '-o')
+        dists = array(dists) - least_squares(ks,dists)
+        plt.plot(dists)
+        for i in range(1, len(dists) - 1):
+            if  dists[i] < dists[i-1] and dists[i] < dists[i+1] and dists[i] < numpy.mean(dists):
+                print(i)
+                plt.plot([i], [dists[i]], "o")
+                self.opt_k = i +1
+                return self.opt_k
+        plt.show()
+        self.opt_k = 2
+        return 2
 
 
 if __name__ == '__main__':
