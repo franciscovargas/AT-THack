@@ -10,14 +10,16 @@ import { FirstPage } from "./firstPage";
 import { FirstPageModel } from "./firstPageModel";
 import { SecondPage } from "./secondPage";
 import { SecondPageModel } from "./secondPageModel"
+import { ThirdPage } from "./thirdPage";
+import { ThirdPageModel } from "./thirdPageModel"
 import { Container } from "./container";
 
 let appElement = document.createElement("div");
 appElement.id = "app";
 document.body.appendChild(appElement);
 
-const names = ["First", "Second"];
-const linkNames = ["", "second-page"];
+const names = ["First", "Second", "Third"];
+const linkNames = ["", "second-page", "third-page"];
 
 function wrapInContainer(element: JSX.Element, index: number) {
     let component: any = React.createClass({
@@ -44,6 +46,10 @@ ReactDOM.render((
         <Route
             path="/second-page"
             component={wrapInContainer(<SecondPage model={new SecondPageModel()}/>, 1)}
+        />
+        <Route
+            path="/third-page"
+            component={wrapInContainer(<ThirdPage model={new ThirdPageModel()}/>, 2)}
         />
     </Router>),
     document.getElementById('app')
