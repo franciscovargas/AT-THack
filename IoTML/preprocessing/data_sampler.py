@@ -24,8 +24,8 @@ def util_parser(mode="train"):
     for sample in train_data:
         # print(list(sample.values()))
         for nested_thing_k in sample:
-            # print(nested_thing_k)
             nested_thing = numpy.asarray(sample[nested_thing_k])
+            # print(nested_thing_k)
             # print(nested_thing[:,1][:40])
             if nested_thing_k != "myPhone_falling":
                 matrix.append(nested_thing[:,1][:40])
@@ -36,7 +36,7 @@ def util_parser(mode="train"):
         # print(v,times)
     matrix = numpy.asarray(matrix)
     print(matrix, matrix.shape)
-    return train_data
+    return matrix, y, t
 
 
 def rolling_window(vector, size, func=None, channels=6):
@@ -72,7 +72,7 @@ def rolling_window(vector, size, func=None, channels=6):
     
     # recursively slide using MapReduce styled recurrence.
 
-    x= numpy.zeros((channels,size)).astype(numpy.float32)
+    x= numpy.zeros((channels,size)).astype(numpy.float64)
 
     result = tf.scan(stride_update,
                      segment_init_indices,
@@ -196,17 +196,17 @@ if __name__ == '__main__':
     print((dt3  - dt2).seconds /60.0)
     x = numpy.arange(100).reshape(10,10).astype(numpy.float32)
     print(x, x.shape)
-    d = rolling_window(x,4, channels=10)
-    """
-    fts = FixedTimeSeriesSlicer(x, 4, dt1, dt2,  1)
-    print(fts.data)
-    print(fts.data.reshape(7,40))
-    fts.insert_segment(x, dt3, dt4)
-    print(fts.data.shape)
-    print(fts.collapse_sensorial_axis())
-    """
+    # d = rolling_window(x,4, channels=10)
+    matrix, y, t = util_parser()
+    
+    fts = FixedTimeSeriesSlicer(matrix.astype(numpy.float64), 4, t[0], t[-1],  1)
+    print(fts.data,fts.data.shape)
+    # print(fts.data.reshape(7,40))
+    # fts.insert_segment(x, dt3, dt4)
+    # print(fts.data.shape)
+    # print(fts.collapse_sensorial_axis())
+    
 
-    util_parser()
 
 
 
