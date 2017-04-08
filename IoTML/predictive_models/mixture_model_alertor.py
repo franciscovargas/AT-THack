@@ -3,17 +3,20 @@ import tensorflow as tf
 import numpy
 from sklearn import datasets
 from sklearn.decomposition import PCA
+from multiprocessing import Pool
 
 
 def main(test_k=3):
-	# import iris to test GMM
-	iris = datasets.load_iris()
-	X = iris.data.astype(numpy.float32)
-	Y = iris.target
-	g = gmm.GMM(test_k)
-	g.fit(input_fn= lambda:(tf.constant(X), None),  max_steps=300)
-	print(list(g.predict_assignments(lambda:tf.constant(X))))
-	print("FITTED")
+    # import iris to test GMM
+    iris = datasets.load_iris()
+    X = iris.data.astype(numpy.float32)
+    Y = iris.target
+    # g = gmm.GMM(test_k)
+    # g.fit(input_fn= lambda:(tf.constant(X), None),  max_steps=300)
+    # print(list(g.predict_assignments(lambda:tf.constant(X))))
+    g = MixtureModelOptimiser(X)
+    g.elbow_method()
+    print("FITTED")
 
 
 class MixtureModelOptimiser(object):
@@ -21,7 +24,7 @@ class MixtureModelOptimiser(object):
 
     def __init__(self, X):
         self.n, self.dim = X.shape
-
+        self.X = X
         # hacky bound setting for elbow method
         self.alpha = 3
         if self.n > 20:
@@ -47,15 +50,36 @@ class MixtureModelOptimiser(object):
             # Take advantage of matrix mult in numpy
             # to avoid slow loops in python
             # when calculating the cluster inter aggregate distances
-            dist_all = np.diag(np.dot(z, z.T))
+            dist_all = numpy.diag(numpy.dot(z, z.T))
             # this check here checks the method above is correct
             # Although providing proof is easy.
             assert dist_all.all() >= 0
             # sum up and append aggregate distances
-            euc_dists.append(np.sum(dist_all))
+            euc_dists.append(numpy.sum(dist_all))
 
-        return np.sum(euc_dists)
+        return numpy.sum(euc_dists)
+
+    def elbow_iteration(self, k):
+        g = gmm.GMM(k)
+        g.fit(input_fn= lambda:(tf.constant(self.X), None),  max_steps=300)
+        cent = list(g.clusters())
+        print(cent)
+        assignments =list(g.predict_assignments(lambda:tf.constant(self.X)))
+        print(assignments, len(assignments), self.X.shape)
+        clusters = [[]] * (max(assignments) + 1)
+        # clusters[0] = [1]
+        [clusters[el].append(self.X[i]) for i, el in enumerate(assignments)]
+        print(clusters)
+        print(self.agg_dist(clusters, cent))
+
+    def elbow_method(self):
+        scores = list()
+        p = Pool(4)
+        ks = range(2, self.k_max)
+        p.map(self.elbow_iteration, ks)
+            
+            # print(list(g.predict_assignments(lambda:tf.constant(X))))
 
 
 if __name__ == '__main__':
-	main()
+    main()
