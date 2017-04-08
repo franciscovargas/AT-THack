@@ -1,6 +1,6 @@
 import abc
-from contextlib import contextmanager
 import numpy
+from sklearn.manifold import TSNE
 import tensorflow as tf
 
 
@@ -130,6 +130,10 @@ class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
     @tf_session
     def insert_segment(self, time_segement,
                        start_time, end_time):
+        """
+        Method to dynamically time slice a stream of incomming data.
+        Seems to work, however its a bit magical and relies 
+        """
         if (start_time - self.end_timestamp).seconds / 60.0 < self.NOVERLAP_TOLERANCE:
             # matrix to concatenate with incoming stream
             overlap_data = numpy.concatenate([self.data[-1,:,:], time_segement], axis=-1) # port to tf
@@ -139,8 +143,18 @@ class FixedTimeSeriesSlicer(BaseTimeSeriesSlicer):
             print(self._data.shape, tmp_tensor.shape)
             self._data = numpy.concatenate([self._data, tmp_tensor], axis=0)
         else:
-            print( (start_time - self.start_timestamp).seconds / 60.0)
             raise BaseException("This stream should be its Own independant object")
+
+
+    def collapse_sensorial_axis(self):
+        """
+        Uses TSNE to collapse sensorial axis. Itmight be more robust to time align the
+        TSNE fits however this will produce more latency and is a bit more time consuming.
+        """
+        x, y, z = self.data.shape
+        t = TSNE(n_components=self.window, random_state=0)
+        return t.fit_transform(self.data.reshape(x, y * z))
+
 
 
 
@@ -158,7 +172,10 @@ if __name__ == '__main__':
 
     fts = FixedTimeSeriesSlicer(x, 4, dt1, dt2,  1)
     print(fts.data)
+    print(fts.data.reshape(7,40))
     fts.insert_segment(x, dt3, dt4)
+    print(fts.data.shape)
+    print(fts.collapse_sensorial_axis())
 
     # @tf_session
     # def tst_cntxt(d):
