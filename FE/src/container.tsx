@@ -24,9 +24,7 @@ export class Container extends React.Component<ContainerProps, {}> {
 
     private renderHeader() {
       return (
-        <div className="header">
-          HEADER
-        </div>
+        <div className="header" />
       );
     }
 
