@@ -18,6 +18,7 @@ export class Container extends React.Component<ContainerProps, {}> {
                 {this.renderHeader()}
                 {this.renderNavigationBar()}
                 {this.renderBody()}
+                {this.renderFooter()}
             </div>
         );
     }                
@@ -25,6 +26,14 @@ export class Container extends React.Component<ContainerProps, {}> {
     private renderHeader() {
       return (
         <div className="header" />
+      );
+    }
+
+    private renderFooter() {
+      return (
+        <div className="footer pt-ui-text pt-elevation-0">
+          <span className="copyright">© 2017 Data Minions</span>
+        </div>
       );
     }
 

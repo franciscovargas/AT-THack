@@ -41,7 +41,7 @@ export class ThirdPage extends RxComponent<ThirdPageState, ThirdPageModel> {
                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper, tellus et accumsan faucibus, justo metus facilisis libero, sit amet mollis enim enim imperdiet libero. Aliquam mollis velit eget est tincidunt mattis. Suspendisse ultrices mollis odio eget aliquet. Duis et dapibus metus, quis dignissim est. Pellentesque a pretium magna. Phasellus interdum mi facilisis orci suscipit, consectetur condimentum purus ultrices. Cras purus ligula, fermentum sed turpis vel, cursus porta ante. Duis rhoncus ipsum eros, eget convallis metus blandit sit amet. Nullam vitae risus facilisis, ultricies diam vitae, feugiat elit. Sed tincidunt lectus nec convallis sodales.
                </p>
                <Tabs2 id="foo" onChange={()=>{return}}>
-                  <Tab2 id="FCNN"  className="strong" title="Fully Connected Neural Network" panel={this.generateFCNNDescription()} />
+                  <Tab2 id="FCNN"  className="strong" title="Fully Connected Neural Network"   panel={this.generateFCNNDescription()} />
                   <Tab2 id="CNN"   className="strong" title="Convolutional Neural Network" panel={this.generateCNNDescription()} />
                   <Tab2 id="LSTM"  className="strong" title="LSTM" panel={this.generateLSTMDescription()} />
                   <Tab2 id="SLSTM" className="strong" title="Stacked LSTM" panel={this.generateSLSTMDescription()} />
@@ -135,7 +135,7 @@ It makes no assumptions about the features in the data which makes it able to ap
       ? <div className="spinner">
           <Spinner className="pt-large" />
         </div>
-      : <textarea rows={10} cols={200} className="font-code">Write your code here...</textarea>
+      : <textarea rows={8} cols={200} className="font-code">Write your code here...</textarea>
       return (
         <div>
           <h3>Advanced</h3>

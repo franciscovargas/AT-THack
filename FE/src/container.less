@@ -2,6 +2,8 @@
 @margin-width: 3vw;
 @m2x-blue: #1ea4d7;
 .container {
+    display: flex;
+    flex-direction: column;
     padding: 0;
 
     .header {
@@ -29,6 +31,16 @@
                 margin-right: 3em;
             }
         }
+    }
+
+    .footer {
+        .copyright {
+            margin-right: auto;
+            margin-left: auto;
+        }
+        width: 100%;
+        position: absolute;
+        bottom: 0;
     }
 
     .body {
